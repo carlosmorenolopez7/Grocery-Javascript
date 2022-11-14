@@ -5,6 +5,9 @@ let input = document.getElementById('grocery');
 let form = document.getElementById('form');
 let editButtons = document.getElementsByClassName('edit');
 let deleteButtons = document.getElementsByClassName('delete');
+let list = localStorage.getItem('list');
+groceryList.innerHTML = list;
+
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -27,6 +30,7 @@ form.addEventListener('submit', (e) => {
         deleteButtons[i].addEventListener('click', (e) => {
             let li = e.target.parentElement;
             li.parentElement.removeChild(li);
+            localStorage.setItem('list', groceryList.innerHTML);
         });
     }
     for(let i = 0; i < editButtons.length; i++) {
@@ -39,8 +43,14 @@ form.addEventListener('submit', (e) => {
     }
 });
 
+submit.addEventListener('click', () => {
+    let list = groceryList.innerHTML;
+    localStorage.setItem('list', list);
+});
+
 clearItems.addEventListener('click', () => {
     while(groceryList.firstChild) {
         groceryList.removeChild(groceryList.lastChild);
     }
+    localStorage.clear();
 });
